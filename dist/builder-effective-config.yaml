@@ -1,0 +1,61 @@
+directories:
+  output: /home/crindalwalt/CodeBook/laundry_management_desktop_application/dist
+  buildResources: build
+appId: ''
+productName: Laravel
+files:
+  - filter:
+      - '!**/.vscode/*'
+      - '!src/*'
+      - '!electron.vite.config.{js,ts,mjs,cjs}'
+      - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+      - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+asarUnpack:
+  - resources/**
+afterSign: build/notarize.js
+win:
+  executableName: laravel
+nsis:
+  artifactName: Laravel-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+protocols:
+  name: nativephp
+  schemes:
+    - nativephp
+mac:
+  entitlementsInherit: build/entitlements.mac.plist
+  target:
+    target: default
+    arch:
+      - x64
+      - arm64
+  artifactName: Laravel-${version}-${arch}.${ext}
+  extendInfo:
+    NSCameraUsageDescription: Application requests access to the device's camera.
+    NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+dmg:
+  artifactName: Laravel-${version}-${arch}.${ext}
+linux:
+  target:
+    - AppImage
+    - deb
+  maintainer: http://localhost
+  category: Utility
+appImage:
+  artifactName: Laravel-${version}.${ext}
+npmRebuild: false
+publish:
+  provider: spaces
+  name: ''
+  region: ''
+  path: null
+extraMetadata:
+  name: laravel
+  homepage: http://localhost
+  version: 1.0.0
+  author: ''
+electronVersion: 25.3.2
