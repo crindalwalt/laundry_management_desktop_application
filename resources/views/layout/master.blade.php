@@ -36,6 +36,8 @@
     @stack('style')
 </head>
 <body data-base-url="{{url('/')}}">
+@include('sweetalert::alert')
+
 @php
     function active_class($path, $active = 'active') {
       return call_user_func_array('Request::is', (array)$path) ? $active : '';
