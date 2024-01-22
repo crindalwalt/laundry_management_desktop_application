@@ -104,9 +104,8 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title">Data Table</h6>
-                    <p class="text-muted mb-3">Read the <a href="https://datatables.net/" target="_blank"> Official
-                            DataTables Documentation </a>for a full list of instructions and other options.</p>
+                    <h6 class="card-title">Search and View Details of All the Jobs</h6>
+
                     <div class="table-responsive">
                         <table id="dataTableExample" class="table">
                             <thead>
@@ -118,8 +117,8 @@
                                 <th>Job Type</th>
                                 <th>Payment</th>
                                 <th>Picking Time</th>
-                                <th>Cloth Status</th>
                                 <th>Payment Status</th>
+                                <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -127,12 +126,12 @@
 
                                 @foreach($jobs as $item)
                                     <tr>
-                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$loop->iteration}}</td>sdfasd
                                         <td>{{ $item->Job_id }}</td>
                                         <td>{{ $item->customer->full_name}}</td>
                                         <td>{{ $item->cloth }}</td>
                                         <td>
-                                            <span class="badge rounded-pill bg-primary">
+                                            <span class="badge rounded-pill @if($item->job_type == "washing") bg-info @elseif($item->job_type == "dry_cleaning")bg-dark @elseif($item->job_type == "pressing") bg-primary @endif">
                                             {{ $item->job_type }}
 
                                             </span>
@@ -140,16 +139,24 @@
                                         <td>PKR {{ $item->payment }}</td>
                                         <td>{{ \Carbon\Carbon::parse($item->picking_time)->format('l jS \of F Y h:i:s A')}}</td>
 
-                                        <td>
-                                            <span class="badge rounded-pill bg-primary">
-                                            {{ $item->cloth_status }}
 
+                                        <td>
+                                            <span class="badge rounded-pill @if($item->payment_status == "pending") bg-danger @elseif($item->payment_status == "paid")bg-success @endif">
+                                            {{ $item->payment_status }}
                                             </span>
                                         </td>
                                         <td>
-                                            <span class="badge rounded-pill bg-primary">
-                                            {{ $item->payment_status }}
-                                            </span>
+{{--                                            <span class="badge rounded-pill bg-primary">--}}
+{{--                                            {{ $item->cloth_status }}--}}
+
+{{--                                            </span>--}}
+                                            <a class="btn btn-sm btn-outline-warning d-flex align-items-center">
+                                                <i class="btn-icon-prepend" data-feather="eye"></i>
+
+                                                <span class="mx-2">
+                                                    Details
+                                                </span>
+                                            </a>
                                         </td>
 
                                     </tr>

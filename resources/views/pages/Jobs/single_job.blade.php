@@ -104,7 +104,9 @@
                                 <img src="https://img.icons8.com/metro/26/000000/star.png" class="mr-1 " width="19"
                                      height="19" id="star"> <span class="vl mr-2 ml-0"></span>
 
-                                 <span class="font-weight-bold"> Member since </span>{{ \Carbon\Carbon::parse($job->created_at)->format('l jS \of F Y')}} </p>
+                                <span
+                                    class="font-weight-bold"> Member since </span>{{ \Carbon\Carbon::parse($job->created_at)->format('l jS \of F Y')}}
+                            </p>
                         </h6>
                     </div>
                 </div>
@@ -167,97 +169,144 @@
                         </div>
                     </div>
                 </div>
-{{--                <div class="col-md-4 grid-margin stretch-card">--}}
-{{--                    <div class="card">--}}
-{{--                        <div class="card-body">--}}
-{{--                            <div class="d-flex justify-content-between align-items-baseline">--}}
-{{--                                <h6 class="card-title mb-0">Pending Work</h6>--}}
+                {{--                <div class="col-md-4 grid-margin stretch-card">--}}
+                {{--                    <div class="card">--}}
+                {{--                        <div class="card-body">--}}
+                {{--                            <div class="d-flex justify-content-between align-items-baseline">--}}
+                {{--                                <h6 class="card-title mb-0">Pending Work</h6>--}}
 
-{{--                            </div>--}}
-{{--                            <div class="row">--}}
-{{--                                <div class="col-6 col-md-12 col-xl-5 my-3">--}}
-{{--                                    <h3 class="mb-2">10 Cloths</h3>--}}
-{{--                                    <div class="d-flex align-items-baseline">--}}
-{{--                                        <p class="text-success">--}}
-{{--                                            <span>Based on Data</span>--}}
-{{--                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>--}}
-{{--                                        </p>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-6 col-md-12 col-xl-7">--}}
-{{--                                    <div id="growthChart" class="mt-md-3 mt-xl-0"></div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                {{--                            </div>--}}
+                {{--                            <div class="row">--}}
+                {{--                                <div class="col-6 col-md-12 col-xl-5 my-3">--}}
+                {{--                                    <h3 class="mb-2">10 Cloths</h3>--}}
+                {{--                                    <div class="d-flex align-items-baseline">--}}
+                {{--                                        <p class="text-success">--}}
+                {{--                                            <span>Based on Data</span>--}}
+                {{--                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>--}}
+                {{--                                        </p>--}}
+                {{--                                    </div>--}}
+                {{--                                </div>--}}
+                {{--                                <div class="col-6 col-md-12 col-xl-7">--}}
+                {{--                                    <div id="growthChart" class="mt-md-3 mt-xl-0"></div>--}}
+                {{--                                </div>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+
+                    <h6 class="card-title">{{ $job->full_name . " Has PKR " . $total_payment_pending . " payment Due " }}</h6>
+
+                    <form class="forms-sample">
+                        <div class="row mb-3">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Amount </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="exampleInputUsername2" placeholder="00000">
+                            </div>
+                        </div>
+
+
+                        <div class="mb-4">
+
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="transection" id="radioInline1" checked>
+                                <label class="form-check-label" for="radioInline1">
+                                    Recieving Amount
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="transection" id="radioInlineSelected" >
+                                <label class="form-check-label" for="radioInlineSelected">
+                                    Giving Amount
+                                </label>
+                            </div>
+
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary me-2">Pay</button>
+
+                    </form>
+
+                </div>
             </div>
         </div>
     </div>
 
-        <div class="row">
-            <div class="col-md-12 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="card-title">Data Table</h6>
-                        <p class="text-muted mb-3">Read the <a href="https://datatables.net/" target="_blank"> Official
-                                DataTables Documentation </a>for a full list of instructions and other options.</p>
-                        <div class="table-responsive">
-                            <table id="dataTableExample" class="table">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Job Id</th>
-                                    <th>Cloths</th>
-                                    <th>Job Type</th>
-                                    <th>Payment</th>
-                                    <th>Picking Time</th>
-                                    <th>Cloth Status</th>
-                                    <th>Payment Status</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @if($user_jobs)
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Search and View Details of all the job for {{$job->full_name}}</h6>
 
-                                    @foreach($user_jobs as $item)
-                                        <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{ $item->Job_id }}</td>
-                                            <td>{{ $item->cloth }}</td>
-                                            <td>
-                                                <span class="badge rounded-pill bg-primary">
+                    <div class="table-responsive">
+                        <table id="dataTableExample" class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Job Id</th>
+                                <th>Cloths</th>
+                                <th>Job Type</th>
+                                <th>Payment</th>
+                                <th>Picking Time</th>
+                                <th>Payment Status</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if($user_jobs)
+
+                                @foreach($user_jobs as $item)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{ $item->Job_id }}</td>
+                                        <td>{{ $item->cloth }}</td>
+                                        <td>
+                                                <span class="badge rounded-pill @if($item->job_type == "washing") bg-info @elseif($item->job_type == "dry_cleaning")bg-dark @elseif($item->job_type == "pressing") bg-primary @endif">
                                                 {{ $item->job_type }}
 
                                                 </span>
-                                            </td>
-                                            <td>PKR {{ $item->payment }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($item->picking_time)->format('l jS \of F Y h:i:s A')}}</td>
+                                        </td>
+                                        <td>PKR {{ $item->payment }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($item->picking_time)->format('l jS \of F Y h:i:s A')}}</td>
 
-                                            <td>
-                                                <span class="badge rounded-pill bg-primary">
-                                                {{ $item->cloth_status }}
 
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span class="badge rounded-pill bg-primary">
+                                        <td>
+                                                <span class="badge rounded-pill  @if($item->payment_status == "pending") bg-danger @elseif($item->payment_status == "paid")bg-success @endif">
                                                 {{ $item->payment_status }}
                                                 </span>
-                                            </td>
+                                        </td>
 
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <p>No data found</p>
-                                @endif
 
-                                </tbody>
-                            </table>
-                        </div>
+                                        <td>
+                                            <a  class="btn btn-sm btn-outline-warning d-flex align-items-center">
+                                                <i class="btn-icon-prepend" data-feather="eye"></i>
+
+                                                <span class="mx-2">
+                                                    Details
+                                                </span>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            @else
+                                <p>No data found</p>
+                            @endif
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 @endsection
 
 @push('plugin-scripts')

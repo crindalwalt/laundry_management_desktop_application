@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
+use App\Models\Account;
 use App\Models\Customer;
 use App\Models\Job;
 use Cassandra\Custom;
@@ -18,8 +19,8 @@ class JobController extends Controller
     public function index()
     {
         $data['jobs'] = Job::latest()->get();
-        $data['total_jobs']  = count($data['jobs']);
-        $data['total_pending_payment'] = $data['jobs']->where("payment_status","pending")->sum("payment");
+        $data['total_jobs'] = count($data['jobs']);
+        $data['total_pending_payment'] = $data['jobs']->where("payment_status", "pending")->sum("payment");
 //        dd($data);
         return view("pages.Jobs.all_jobs")->with($data);
     }
@@ -27,6 +28,7 @@ class JobController extends Controller
     public function save(Request $request)
     {
 //        dd($request->all());
+        $customer = Customer::find($request->customer_id);
         $request->validate([
             'job_id' => ['required'],
             'cloth' => ['required'],
@@ -45,6 +47,22 @@ class JobController extends Controller
             'description' => $request->description,
             'job_type' => $request->job_type,
         ]);
+//        $customer_account = Account::find($request->customer_id)
+        $customer_previous_ammount = $customer->account->amount ?? 0;
+        $new_ammount = $request->payment += $customer_previous_ammount;
+
+        if ($request->input("payment_status") == "pending") {
+
+            if ($customer->account()->exists()) {
+
+                $customer->account->update(['amount' => $new_ammount,]);
+            } else {
+                Account::create([
+                    "customer_id" => $request->customer_id,
+                    'amount' => $new_ammount,
+                ]);
+            }
+        }
         Alert::success("Job has been saved successfully", "You are being redirected to the jobs dashboards");
         return redirect()->route("jobs.all");
     }
@@ -58,14 +76,14 @@ class JobController extends Controller
         $data['job'] = $id;
         $data['user_jobs'] = $id->jobs;
         $data['total_jobs'] = count($id->jobs);
-        $data['total_payment_pending'] = $id->jobs->where("payment_status","pending")->sum("payment");
+        $data['total_payment_pending'] = $id->jobs->where("payment_status", "pending")->sum("payment");
 //        dd($data);
         return view("pages.Jobs.single_job")->with($data);
     }
 
     public function create()
     {
-        $data['customers']= Customer::latest()->get();
+        $data['customers'] = Customer::latest()->get();
         return view("pages.Jobs.add_jobs")->with($data);
     }
 
