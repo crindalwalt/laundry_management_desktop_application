@@ -18,4 +18,8 @@ class Customer extends Model
     {
         return $this->hasOne(Account::class);
     }
+    public function transections()
+    {
+        return $this->hasMany(Transection::class);
+    }
 }

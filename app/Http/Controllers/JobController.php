@@ -66,7 +66,11 @@ class JobController extends Controller
         Alert::success("Job has been saved successfully", "You are being redirected to the jobs dashboards");
         return redirect()->route("jobs.all");
     }
-
+    public  function job_detail(Job $job)
+    {
+        $data['job'] = $job;
+        return view('pages.Jobs.detail_job')->with($data);
+    }
     /**
      * Show the form for creating a new resource.
      */

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransectionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,7 +35,11 @@ Route::middleware(["auth","verified"])->prefix("/dashboard")->group(function (){
 
 
     Route::get("/jobs/{id}/show", [JobController::class,'detail'])->name("job.detail");
+    Route::get("/jobs/{job}/detail", [JobController::class,'job_detail'])->name("job.detail.open");
     Route::get("/customers",[CustomerController::class,"index"])->name("customer.all");
+    Route::get("/ledger",[TransectionController::class,'index'])->name("transection.all");
+    Route::post("/pay/{customer}/now",[TransectionController::class,'pay'])->name("udhar.pay");
+
 });
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

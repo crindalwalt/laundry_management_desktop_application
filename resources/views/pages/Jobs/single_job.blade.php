@@ -203,11 +203,13 @@
 
                     <h6 class="card-title">{{ $job->full_name . " Has PKR " . $total_payment_pending . " payment Due " }}</h6>
 
-                    <form class="forms-sample">
+                    <form class="forms-sample" method="POST" action="{{ route("udhar.pay",$job->id) }}">
+                        @csrf
                         <div class="row mb-3">
                             <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Amount </label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="exampleInputUsername2" placeholder="00000">
+                                <input type="text" class="form-control" id="exampleInputUsername2" placeholder="00000" name="amount">
+{{--                                <input type="hidden" name="customer_id" value="{{$job->id}}">--}}
                             </div>
                         </div>
 
@@ -215,13 +217,13 @@
                         <div class="mb-4">
 
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" name="transection" id="radioInline1" checked>
+                                <input type="radio" class="form-check-input" name="transection" id="radioInline1" value="income" checked>
                                 <label class="form-check-label" for="radioInline1">
                                     Recieving Amount
                                 </label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input type="radio" class="form-check-input" name="transection" id="radioInlineSelected" >
+                                <input type="radio" class="form-check-input" name="transection" id="radioInlineSelected" value="expense">
                                 <label class="form-check-label" for="radioInlineSelected">
                                     Giving Amount
                                 </label>
@@ -230,7 +232,7 @@
                         </div>
 
 
-                        <button type="submit" class="btn btn-primary me-2">Pay</button>
+                        <button type="submit" class="btn btn-primary me-2">Pay Now</button>
 
                     </form>
 
@@ -269,7 +271,7 @@
                                         <td>{{ $item->cloth }}</td>
                                         <td>
                                                 <span class="badge rounded-pill @if($item->job_type == "washing") bg-info @elseif($item->job_type == "dry_cleaning")bg-dark @elseif($item->job_type == "pressing") bg-primary @endif">
-                                                {{ $item->job_type }}
+                                                {{ $item->job_type  }}
 
                                                 </span>
                                         </td>
@@ -279,13 +281,13 @@
 
                                         <td>
                                                 <span class="badge rounded-pill  @if($item->payment_status == "pending") bg-danger @elseif($item->payment_status == "paid")bg-success @endif">
-                                                {{ $item->payment_status }}
+                                                {{ $item->payment_status == 'pending' ? "Udhar" : "paid" }}
                                                 </span>
                                         </td>
 
 
                                         <td>
-                                            <a  class="btn btn-sm btn-outline-warning d-flex align-items-center">
+                                            <a href="{{ route("job.detail.open",$item->id) }}" class="btn btn-sm btn-outline-warning d-flex align-items-center">
                                                 <i class="btn-icon-prepend" data-feather="eye"></i>
 
                                                 <span class="mx-2">

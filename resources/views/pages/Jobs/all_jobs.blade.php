@@ -72,34 +72,40 @@
                         </div>
                     </div>
                 </div>
-{{--                <div class="col-md-4 grid-margin stretch-card">--}}
-{{--                    <div class="card">--}}
-{{--                        <div class="card-body">--}}
-{{--                            <div class="d-flex justify-content-between align-items-baseline">--}}
-{{--                                <h6 class="card-title mb-0">Pending Work</h6>--}}
+                {{--                <div class="col-md-4 grid-margin stretch-card">--}}
+                {{--                    <div class="card">--}}
+                {{--                        <div class="card-body">--}}
+                {{--                            <div class="d-flex justify-content-between align-items-baseline">--}}
+                {{--                                <h6 class="card-title mb-0">Pending Work</h6>--}}
 
-{{--                            </div>--}}
-{{--                            <div class="row">--}}
-{{--                                <div class="col-6 col-md-12 col-xl-5 my-3">--}}
-{{--                                    <h3 class="mb-2">{{ $total_pending_jobs }} Cloths</h3>--}}
-{{--                                    <div class="d-flex align-items-baseline">--}}
-{{--                                        <p class="text-success">--}}
-{{--                                            <span>Based on Data</span>--}}
-{{--                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>--}}
-{{--                                        </p>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-6 col-md-12 col-xl-7">--}}
-{{--                                    <div id="growthChart" class="mt-md-3 mt-xl-0"></div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                {{--                            </div>--}}
+                {{--                            <div class="row">--}}
+                {{--                                <div class="col-6 col-md-12 col-xl-5 my-3">--}}
+                {{--                                    <h3 class="mb-2">{{ $total_pending_jobs }} Cloths</h3>--}}
+                {{--                                    <div class="d-flex align-items-baseline">--}}
+                {{--                                        <p class="text-success">--}}
+                {{--                                            <span>Based on Data</span>--}}
+                {{--                                            <i data-feather="arrow-up" class="icon-sm mb-1"></i>--}}
+                {{--                                        </p>--}}
+                {{--                                    </div>--}}
+                {{--                                </div>--}}
+                {{--                                <div class="col-6 col-md-12 col-xl-7">--}}
+                {{--                                    <div id="growthChart" class="mt-md-3 mt-xl-0"></div>--}}
+                {{--                                </div>--}}
+                {{--                            </div>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
             </div>
         </div>
     </div> <!-- row -->
-
+    <div id="modelx">
+        <!-- Button trigger modal -->
+{{--        <button type="button" class="btn btn-primary" >--}}
+{{--            Launch demo modal--}}
+{{--        </button>--}}
+        <!-- Modal -->
+    </div>
     <div class="row">
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
@@ -125,13 +131,15 @@
                             @if($jobs)
 
                                 @foreach($jobs as $item)
+
                                     <tr>
-                                        <td>{{$loop->iteration}}</td>sdfasd
+                                        <td>{{$loop->iteration}}</td>
                                         <td>{{ $item->Job_id }}</td>
                                         <td>{{ $item->customer->full_name}}</td>
                                         <td>{{ $item->cloth }}</td>
                                         <td>
-                                            <span class="badge rounded-pill @if($item->job_type == "washing") bg-info @elseif($item->job_type == "dry_cleaning")bg-dark @elseif($item->job_type == "pressing") bg-primary @endif">
+                                            <span
+                                                class="badge rounded-pill @if($item->job_type == "washing") bg-info @elseif($item->job_type == "dry_cleaning")bg-dark @elseif($item->job_type == "pressing") bg-primary @endif">
                                             {{ $item->job_type }}
 
                                             </span>
@@ -141,16 +149,19 @@
 
 
                                         <td>
-                                            <span class="badge rounded-pill @if($item->payment_status == "pending") bg-danger @elseif($item->payment_status == "paid")bg-success @endif">
-                                            {{ $item->payment_status }}
+                                            <span
+                                                class="badge rounded-pill @if($item->payment_status == "pending") bg-danger @elseif($item->payment_status == "paid")bg-success @endif">
+                                                {{ $item->payment_status == 'pending' ? "Udhar" : "paid" }}
                                             </span>
                                         </td>
                                         <td>
-{{--                                            <span class="badge rounded-pill bg-primary">--}}
-{{--                                            {{ $item->cloth_status }}--}}
+                                            {{--                                            <span class="badge rounded-pill bg-primary">--}}
+                                            {{--                                            {{ $item->cloth_status }}--}}
 
-{{--                                            </span>--}}
-                                            <a class="btn btn-sm btn-outline-warning d-flex align-items-center">
+                                            {{--                                            </span>--}}
+                                            <a class="btn btn-sm btn-outline-warning d-flex align-items-center"
+                                                href="{{ route("job.detail.open",$item->id) }}"
+                                            >
                                                 <i class="btn-icon-prepend" data-feather="eye"></i>
 
                                                 <span class="mx-2">
